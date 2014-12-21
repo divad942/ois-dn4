@@ -7,6 +7,7 @@
 	    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
 	     <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
 	    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+	    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 	    <script src="base.js"></script>
 	    <link href="jumbotron-narrow.css" rel="stylesheet">
 	</head>
@@ -15,63 +16,111 @@
 		<div class="container">
 	      <div class="header">
 	        <nav>
-	          <ul class="nav nav-pills pull-right">
-	            <li role="presentation" class="active"><a href="#">Prva stran</a></li>
-	            <li role="presentation"><a href="#">Dodaj pacienta</a></li>
-	            <li role="presentation"><a href="#">Kontakt</a></li>
+	          <ul class="nav nav-pills pull-right" id="tabs" data-tabs="tabs">
+	            <li role="presentation" class="active"><a href="#home" data-toggle="tab">Prva stran</a></li>
+	            <li role="presentation"><a href="#pacient" data-toggle="tab">Dodaj pacienta</a></li>
+	            <li role="presentation"><a href="#generiraj" data-toggle="tab">Generiraj</a></li>
 	          </ul>
 	        </nav>
 	        <h3 class="text-muted"><b>OZK</b><small> Osebni zdravstveni karton</small></h3>
-	      </div>
-	      <!--
-	      <div class="jumbotron">
-	        <h1>Jumbotron heading</h1>
-	        <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-	        <p><a class="btn btn-lg btn-success" href="#" role="button">Sign up today</a></p>
-	      </div>
-	      -->
+	      </div> <!-- end of header -->
+	   
 
-	      <div class="jumbotron">
-	     		<div class="panel panel-default">
-					<div class="panel-heading">
-						<div class="row">
-							<div class="col-lg-8 col-md-8 col-sm-8"><b>Preberi EHR zapis</b> obstoječega bolnika</div>
-							<div class="col-lg-4 col-md-4 col-sm-4"><select class="form-control input-sm" id="preberiObstojeciEHR"><option value=""></option><option value="254f791d-2e7c-49d9-b646-376f62d6ead5">Dejan Lavbič</option><option value="d564c6a3-5a43-4fcc-bfa7-9ac76e9673bd">Pujsa Pepa</option><option value="b931580f-2b05-488b-985b-8d9ffb08ad02">Ata Smrk</option></select></div>
+	    <div id="my-tab-content" class="tab-content">  <!-- start of tab content -->
+	    	<div class="tab-pane active" id="home">
+		      <div class="jumbotron">
+		      		<form class="form-horizontal">
+						<fieldset>
+
+						<!-- Form Name -->
+						<legend>Izberite pacienta</legend>
+
+						<!-- Select Basic -->
+						<div class="form-group">
+						  <label class="col-md-4 control-label" for="izbiraPacienta">Pacient</label>
+						  <div class="col-md-4">
+						    <select id="izbiraPacienta" name="izbiraPacienta" class="form-control">
+						      <option value="254f791d-2e7c-49d9-b646-376f62d6ead5">Jack Daniels</option>
+						      <option value="d564c6a3-5a43-4fcc-bfa7-9ac76e9673bd">Rocky Big</option>
+						      <option value="b931580f-2b05-488b-985b-8d9ffb08ad02">Jason McGrath</option>
+						    </select>
+						  </div>
 						</div>
-					</div>
-					<div class="panel-body">
-						<span class="label label-default">EHR ID</span><input id="preberiEHRid" type="text" class="form-control input-mini" placeholder="7b661e12-3a98-21ad-c29e-2dc9f5a3d885">
-						<button type="button" class="btn btn-primary btn-xs" onclick="preberiEHRodBolnika()">Preberi osnovne podatke o bolniku</button><span id="preberiSporocilo"></span>
-				  	</div>
+
+						</fieldset>
+					</form>
+
 				</div>
-	      </div>
+		     </div>
+		    
+		    <div class="tab-pane" id="pacient">
+		    	<div class="jumbotron">
+		      		<form class="form-horizontal" >
+					<fieldset>
 
-	      <div class="row marketing">
-	        <div class="col-lg-6">
-	          <h4>Subheading</h4>
-	          <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+					<!-- Form Name -->
+					<legend>Pacient</legend>
 
-	          <h4>Subheading</h4>
-	          <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
+					<!-- Text input-->
+					<div class="form-group">
+					  <label class="col-md-4 control-label" for="ime">Ime : </label>  
+					  <div class="col-md-4">
+					  <input id="ime" name="ime" type="text" placeholder="David" class="form-control input-md">
+					    
+					  </div>
+					</div>
 
-	          <h4>Subheading</h4>
-	          <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-	        </div>
+					<!-- Text input-->
+					<div class="form-group">
+					  <label class="col-md-4 control-label" for="priimek">Priimek :</label>  
+					  <div class="col-md-4">
+					  <input id="priimek" name="priimek" type="text" placeholder="Baselj" class="form-control input-md">
+					    
+					  </div>
+					</div>
 
-	        <div class="col-lg-6">
-	          <h4>Subheading</h4>
-	          <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+					<!-- Text input-->
+					<div class="form-group">
+					  <label class="col-md-4 control-label" for="datumRojstva">Datum Rojstva :</label>  
+					  <div class="col-md-4">
+					  <input id="datum" name="datumRojstva" type="text" placeholder="1994-06-9" class="form-control input-md">
+					    
+					  </div>
+					</div>
 
-	          <h4>Subheading</h4>
-	          <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
+					<!-- Button -->
+					<div class="form-group">
+					  <label class="col-md-4 control-label" for="dodajPacienta"></label>
+					  <div class="col-md-4">
+					    <button type="button" class="btn btn-primary btn-sm" onclick="kreirajPacienta()">Dodaj pacienta</button>
+					  </div>
+					</div>
 
-	          <h4>Subheading</h4>
-	          <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-	        </div>
-	      </div>
+					<!-- EHR -->
+					<div class="form-group">
+					  <label class="col-md-4 control-label" for="dodajPacienta"></label>
+					  <div class="col-md-4">
+					    <span id="sporocilo"></span>
+					  </div>
+					</div>
+
+					</fieldset>
+					</form>
+		      	</div>
+
+		    	
+		    </div>
+
+
+		    <div class="tab-pane" id="generiraj">
+		    	<div class="jumbotron">
+		    		<h1>TO DO</h1>
+		    	</div>
+		    </div>
+		</div> <!-- end of tab content -->   
 
       <footer class="footer">
-        <p>&copy; OIS 2014</p>
+        <p>&copy; David Bašelj</p>
       </footer>
 
     </div> <!-- /container -->
